@@ -1,0 +1,143 @@
+@mixin av($property, $startSize, $minSize, $widthFrom: 1400, $widthTo: 375) {
+  $addSize: $startSize - $minSize;
+  #{$property}: calc(#{$minSize + px} + #{$addSize} * (100vw - #{$widthTo + px}) / #{($widthFrom) - ($widthTo)});
+  @media (min-width: ($widthFrom + px)) {
+    #{$property}: $startSize + px;
+  }
+}
+
+.map {
+  background-color: #566d8f;
+  @include av("padding-top", 75, 40);
+  @include av("padding-bottom", 105, 50);
+  overflow: hidden;
+  &__container {
+    max-width: 1400px;
+    padding: 15px;
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    column-gap: 70px;
+    @media (max-width: 1024px) {
+      flex-direction: column-reverse;
+      row-gap: 30px;
+    }
+  }
+  &__body {
+    position: relative;
+    flex: 1 0 auto;
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+  }
+  &__label {
+    pointer-events: none;
+    display: none;
+    position: absolute;
+    @include av("font-size", 20, 16);
+    color: #566d8f;
+    font-weight: bold;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px 40px;
+    z-index: 20;
+    box-shadow:
+      rgba(0, 0, 0, 0.3) 0px 19px 38px,
+      rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    @media (max-width: 640px) {
+      padding: 10px 30px;
+    }
+  }
+  &__image {
+    width: 100%;
+    height: 100%;
+    path:hover {
+      fill: #fff;
+    }
+  }
+  &__details {
+  }
+  &__title {
+    color: #fff;
+    line-height: 1.1;
+    @include av("font-size", 30, 24);
+    margin-bottom: 80px;
+    span {
+      font-weight: bold;
+      @include av("font-size", 50, 36);
+    }
+    @media (max-width: 1024px) {
+      margin-bottom: 30px;
+    }
+  }
+  &__areas {
+    @media (max-width: 1024px) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px 40px;
+    }
+  }
+  &__area {
+    &:not(last-child) {
+      margin-bottom: 22px;
+    }
+    @media (max-width: 1024px) {
+      &:not(last-child) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+.area-map {
+  display: flex;
+  align-items: center;
+  column-gap: 18px;
+  &__color {
+    width: 35px;
+    height: 31px;
+    flex-shrink: 0;
+    @media (max-width: 768px) {
+      width: 25px;
+      height: 20px;
+    }
+  }
+  &__label {
+    color: #fff;
+    font-weight: bold;
+    @include av("font-size", 20, 16);
+  }
+}
+
+.area-pittsburgh {
+  fill: #65bec2;
+}
+.area-philadelphia {
+  fill: #ff83a6;
+}
+.area-williamsport {
+  fill: #93e8ff;
+}
+.area-harrisburg {
+  fill: #fff4cd;
+}
+.area-allentown {
+  fill: #82a3ff;
+}
+.path-marker {
+  width: 32px;
+  height: 44px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 52" fill="none"><path d="M19 47L17.9062 48.0264L19 49.192L20.0938 48.0264L19 47ZM19 47C20.0938 48.0264 20.094 48.0262 20.0943 48.0259L20.0952 48.0249L20.0981 48.0219L20.1081 48.0111L20.1453 47.9712C20.1774 47.9366 20.2243 47.8859 20.2849 47.8199C20.406 47.6879 20.582 47.4945 20.8052 47.2452C21.2513 46.7468 21.8861 46.0245 22.6467 45.1224C24.1666 43.3199 26.1959 40.7916 28.2283 37.8923C30.2576 34.9973 32.3099 31.7044 33.8599 28.3744C35.4002 25.0652 36.5 21.6028 36.5 18.4C36.5 9.01505 28.6082 1.5 19 1.5C9.39184 1.5 1.5 9.01505 1.5 18.4C1.5 21.6028 2.59983 25.0652 4.14009 28.3744C5.69006 31.7044 7.74241 34.9973 9.77172 37.8923C11.8041 40.7916 13.8334 43.3199 15.3533 45.1224C16.1139 46.0245 16.7487 46.7468 17.1948 47.2452C17.418 47.4945 17.594 47.6879 17.7151 47.8199C17.7757 47.8859 17.8226 47.9366 17.8547 47.9712L17.8919 48.0111L17.9019 48.0219L17.9048 48.0249L17.9057 48.0259C17.906 48.0262 17.9062 48.0264 19 47ZM19 22.4C16.6196 22.4 14.7857 20.5541 14.7857 18.4C14.7857 16.2459 16.6196 14.4 19 14.4C21.3804 14.4 23.2143 16.2459 23.2143 18.4C23.2143 20.5541 21.3804 22.4 19 22.4Z" fill="white" stroke="%23566D8F" stroke-width="3"/></svg>');
+  background-repeat: no-repeat;
+  background-position: top;
+  pointer-events: none;
+  @media (max-width: 768px) {
+    width: 25px;
+    height: 35px;
+  }
+  @media (max-width: 640px) {
+    width: 20px;
+    height: 30px;
+  }
+}
