@@ -35,7 +35,8 @@ export class Modal {
   private onPathClick = (e: Event) => {
     const target = e.currentTarget as HTMLElement;
     if (!target) return;
-    const pathId = Array.from(target.classList)[0].slice(5);
+    const pathId = Array.from(target.classList)[0]?.slice(5);
+    console.log(Array.from(target.classList));
     if (!pathId) return;
     const current = mapAreasInfo.find((el: any) => el.id.toLowerCase() === pathId.toLowerCase());
     if (!current) return;
